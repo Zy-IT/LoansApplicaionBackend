@@ -2,43 +2,51 @@ package com.Loans.LoansApplication.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "LoanApplication" )
+@Table(name = "\"LoanApplication\"")
 public class LoanApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "\"loanApplicationId\"", nullable=false)
     private long loanApplicationId;
 
-    @Column(nullable = false)
+    @Column(name = "\"fullName\"", nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
-    private int contactNo;
+    @Column(name = "\"contactNo\"", nullable = false)
+    private String contactNo;
 
-    @Column(nullable = false)
+    @Column(name = "\"email\"", nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "\"branch\"", nullable = false)
     private String branch;
 
-    @Column(nullable = false)
+    @Column(name = "\"product\"", nullable = false)
     private String product;
 
-    @Column(nullable = false)
+    @Column(name = "\"subject\"", nullable = false)
     private String subject;
 
-    @Column(nullable = false)
+    @Column(name = "\"message\"", nullable = false)
     private String message;
-
+    
+    @Column(name = "\"createdAt\"", nullable = false)
     private LocalDateTime createdAt;
 
     public LoanApplication() {
     }
 
-    public LoanApplication(String fullName, int contactNo, String email,
+    public LoanApplication(String fullName, String contactNo, String email,
             String branch, String product, String subject, String message, LocalDateTime createdAt) {
         this.fullName = fullName;
         this.contactNo = contactNo;
@@ -66,11 +74,11 @@ public class LoanApplication {
         this.fullName = fullName;
     }
 
-    public int getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setContactNo(int contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 

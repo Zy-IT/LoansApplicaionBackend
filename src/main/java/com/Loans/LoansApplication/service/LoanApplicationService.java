@@ -1,20 +1,26 @@
 package com.Loans.LoansApplication.service;
 
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.Loans.LoansApplication.repository.LoanApplicationRepository;
+import org.springframework.stereotype.Service;
+
 import com.Loans.LoansApplication.dto.LoanApplicationDTO;
 import com.Loans.LoansApplication.model.LoanApplication;
+import com.Loans.LoansApplication.model.User;
+import com.Loans.LoansApplication.repository.LoanApplicationRepository;
+import com.Loans.LoansApplication.repository.UserRepository;
 
 @Service
 public class LoanApplicationService {
 
     private final LoanApplicationRepository loanApplicationRepository;
+    private final UserRepository userRepository;
 
-    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository) {
+    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository,
+            UserRepository userRepository) {
         this.loanApplicationRepository = loanApplicationRepository;
+        this.userRepository = userRepository;
     }
 
     //Converts Entity to DTO 
@@ -39,7 +45,26 @@ public class LoanApplicationService {
                 .collect(Collectors.toList());
     }
 
-    //Logic Prepared for fetching with the use of Id
+    //Fetch All Data but must belong to Specific Branch only, used officeId for basis
+    public List<LoanApplicationDTO> getAllLoanByOfficeId(String officeId) {
+        if (officeId == null || officeId.isEmpty()) {
+            System.out.println("There is no username provided");
+        }
+
+        User user = userRepository.findByOfficeId(officeId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        String branch = user.getBranch();
+        if (branch == null) {
+            throw new RuntimeException("Branch not found");
+        }
+
+        List<LoanApplication> loanApplication = loanApplicationRepository.findByBranch(branch);
+        return loanApplication.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public LoanApplicationDTO getLoanByLoanApplicationId(Long loanApplicationId) {
         LoanApplication loanApplication = loanApplicationRepository.findByLoanApplicationId(loanApplicationId)
                 .orElseThrow(() -> new RuntimeException("LoanApplication not found"));

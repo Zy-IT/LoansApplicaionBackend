@@ -8,7 +8,7 @@ public class LoanApplicationDTO {
     @NotBlank(message = "Full Name is required")
     private String fullName;
     @NotBlank(message = "Contact Number is required")
-    private int contactNo;
+    private String contactNo;
     @NotBlank(message = "Email is required")
     private String email;
     @NotBlank(message = "Branch is required")
@@ -23,7 +23,7 @@ public class LoanApplicationDTO {
     public LoanApplicationDTO() {
     }
 
-    public LoanApplicationDTO(String fullName, int contactNo, String email,
+    public LoanApplicationDTO(String fullName, String contactNo, String email,
             String branch, String product, String subject, String message) {
         this.fullName = fullName;
         this.contactNo = contactNo;
@@ -50,11 +50,11 @@ public class LoanApplicationDTO {
         this.fullName = fullName;
     }
 
-    public int getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setContactNo(int contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
@@ -96,5 +96,17 @@ public class LoanApplicationDTO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "LoanApplicationDTO{"
+                + "loanApplicationId='" + loanApplicationId + '\''
+                + ", branch='" + branch + '\''
+                + ", fullName='" + fullName + '\''
+                + ", email='" + email + '\''
+                + ", product='" + product + '\''
+                + ", subject='" + subject + '\''
+                + '}';
     }
 }

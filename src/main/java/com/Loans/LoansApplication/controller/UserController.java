@@ -24,6 +24,10 @@ public class UserController {
 
     @PostMapping("/Login")
     public ResponseEntity<UserDTO> userLogin(@Valid @RequestBody LoginDTO loginDTO) {
+        System.out.println(loginDTO.getOfficeId());
+        System.out.println(loginDTO.getPassword());
+
+
         UserDTO userDTO = userService.loginUser(loginDTO);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
